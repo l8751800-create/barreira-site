@@ -473,6 +473,19 @@ h1 span.line2{display:block;font-size:.7em;font-weight:700;color:var(--cream);op
   background:rgba(255,248,235,.06);
   color:var(--cream);font-size:.92rem;line-height:1.5;
 }
+.kids-media{
+  margin-top:24px;
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 20px 44px rgba(0,0,0,.24);
+}
+.kids-media img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 .kids-card{
   padding:26px;border-radius:26px;
   border:1px solid rgba(255,255,255,.1);
@@ -1464,6 +1477,10 @@ footer{
           <div class="kids-flavor"><strong>Chocolate com Confete</strong><br>Opcao colorida e com visual infantil para presentear.</div>
           <div class="kids-flavor"><strong>Chocolate Branco</strong><br>Doce classico para quem prefere um sabor mais suave.</div>
         </div>
+
+        <div class="kids-media">
+          <img src="ovo-promocao-crianca.jpeg" alt="Promocao de ovos infantis de Pascoa">
+        </div>
       </div>
 
       <div class="kids-card">
@@ -1476,11 +1493,11 @@ footer{
           <div class="kids-badges">
             <span class="kids-badge">5 sabores infantis</span>
             <span class="kids-badge">2 unidades por R$ 60</span>
-            <span class="kids-badge">Pedido pelo WhatsApp</span>
+            <span class="kids-badge">Checkout em 3 etapas</span>
           </div>
         </div>
 
-        <a href="https://w.app/docecolherfortaleza?text=Oi%21%20Quero%20saber%20mais%20sobre%20a%20promocao%20dos%20ovos%20infantis%20de%20P%C3%A1scoa%2C%202%20por%20R%24%2060." class="kids-cta" target="_blank" rel="noopener noreferrer">
+        <a href="#comprar" class="kids-cta" data-open-purchase data-offer-type="kids">
           Quero os ovos infantis
         </a>
       </div>
@@ -1493,9 +1510,9 @@ footer{
   <div class="purchase-modal-panel" role="dialog" aria-modal="true" aria-labelledby="purchaseModalTitle">
     <div class="purchase-modal-head">
       <div>
-        <span class="purchase-modal-kicker">Pedido Guiado</span>
+        <span class="purchase-modal-kicker" id="purchaseModalKicker">Pedido Guiado</span>
         <h3 class="purchase-modal-title" id="purchaseModalTitle">Finalize tudo <em>dentro do site</em></h3>
-        <p class="purchase-modal-sub">Um fluxo claro, elegante e sem sair da página: escolha seus sabores, preencha os dados da entrega e confirme tudo com segurança antes de seguir para o pagamento.</p>
+        <p class="purchase-modal-sub" id="purchaseModalSub">Um fluxo claro, elegante e sem sair da página: escolha seus sabores, preencha os dados da entrega e confirme tudo com segurança antes de seguir para o pagamento.</p>
       </div>
       <button type="button" class="purchase-close" id="closePurchaseModal" aria-label="Fechar modal de compra">×</button>
     </div>
@@ -1522,13 +1539,13 @@ footer{
       <div class="purchase-stage is-active" data-purchase-stage="1">
         <div class="purchase-layout">
           <div class="purchase-card">
-            <h4>Escolha 2 sabores</h4>
-            <p>Você pode montar seu pedido com calma. Todos os sabores do cardápio ficam disponíveis aqui para transmitir confiança na escolha e deixar claro exatamente o que vai entrar no pedido.</p>
+            <h4 id="purchaseStageTitle">Escolha 2 sabores</h4>
+            <p id="purchaseStageCopy">Você pode montar seu pedido com calma. Todos os sabores do cardápio ficam disponíveis aqui para transmitir confiança na escolha e deixar claro exatamente o que vai entrar no pedido.</p>
 
             <div class="selection-pill-row">
-              <span class="selection-pill"><strong>Kit</strong> 2 ovos de 400g</span>
+              <span class="selection-pill"><strong>Kit</strong> <span id="purchaseKitLabel">2 ovos de 400g</span></span>
               <span class="selection-pill"><strong>Entrega</strong> Zona Leste de São Paulo</span>
-              <span class="selection-pill"><strong>Preço</strong> R$ 54,90</span>
+              <span class="selection-pill"><strong>Preço</strong> <span id="purchasePriceLabel">R$ 54,90</span></span>
             </div>
 
             <div class="purchase-note">
@@ -1637,11 +1654,11 @@ footer{
                 </div>
                 <div class="purchase-stat">
                   <span class="purchase-stat-label">Valor</span>
-                  <div class="purchase-stat-value">R$ 54,90</div>
+                  <div class="purchase-stat-value" id="purchaseSidebarPrice">R$ 54,90</div>
                 </div>
                 <div class="purchase-stat">
                   <span class="purchase-stat-label">Formato</span>
-                  <div class="purchase-stat-value">Kit com 2 ovos</div>
+                  <div class="purchase-stat-value" id="purchaseSidebarFormat">Kit com 2 ovos</div>
                 </div>
                 <div class="purchase-stat">
                   <span class="purchase-stat-label">Entrega</span>
@@ -1720,7 +1737,7 @@ footer{
             </div>
             <div class="checkout-box">
               <span class="checkout-box-label">Valor total</span>
-              <div class="checkout-box-value">R$ 54,90</div>
+              <div class="checkout-box-value" id="checkoutTotalValue">R$ 54,90</div>
             </div>
             <div class="checkout-box">
               <span class="checkout-box-label">Status</span>
@@ -1896,7 +1913,7 @@ const observer = new IntersectionObserver(entries => {
   });
 }, {threshold:0.08});
 
-document.querySelectorAll('.product-card,.testimonial,.promo-band').forEach(el => {
+document.querySelectorAll('.product-card,.testimonial,.promo-band,.kids-offer').forEach(el => {
   el.style.opacity='0';
   el.style.transform='translateY(28px)';
   el.style.transition='opacity .65s ease, transform .65s ease';
@@ -1915,10 +1932,19 @@ const purchaseFlavorPicker = document.getElementById('purchaseFlavorPicker');
 const purchaseFlavorStatus = document.getElementById('purchaseFlavorStatus');
 const purchaseForm = document.getElementById('purchaseForm');
 const sidebarFlavorCount = document.getElementById('sidebarFlavorCount');
+const purchaseModalKicker = document.getElementById('purchaseModalKicker');
+const purchaseModalSub = document.getElementById('purchaseModalSub');
+const purchaseStageTitle = document.getElementById('purchaseStageTitle');
+const purchaseStageCopy = document.getElementById('purchaseStageCopy');
+const purchaseKitLabel = document.getElementById('purchaseKitLabel');
+const purchasePriceLabel = document.getElementById('purchasePriceLabel');
+const purchaseSidebarPrice = document.getElementById('purchaseSidebarPrice');
+const purchaseSidebarFormat = document.getElementById('purchaseSidebarFormat');
 const summaryFlavors = document.getElementById('summaryFlavors');
 const summaryCustomer = document.getElementById('summaryCustomer');
 const summaryAddress = document.getElementById('summaryAddress');
 const checkoutOrderCode = document.getElementById('checkoutOrderCode');
+const checkoutTotalValue = document.getElementById('checkoutTotalValue');
 const purchaseStepPills = document.querySelectorAll('[data-step-pill]');
 const purchaseStages = document.querySelectorAll('[data-purchase-stage]');
 const CHECKOUT_URL = 'https://go.invictuspay.app.br/vizmdu55zz';
@@ -1953,11 +1979,71 @@ const flavorCatalog = [
   'Caramelo Salgado com Chocolate'
 ];
 const uniqueFlavorCatalog = [...new Set(flavorCatalog)];
+const kidsFlavorCatalog = [
+  'Brigadeiro ao Leite',
+  'Ninho Cremoso',
+  'Oreo Crocante',
+  'Chocolate com Confete',
+  'Chocolate Branco'
+];
+const offerConfigs = {
+  classic: {
+    label: 'Pedido Guiado',
+    title: 'Finalize tudo <em>dentro do site</em>',
+    sub: 'Um fluxo claro, elegante e sem sair da pagina: escolha seus sabores, preencha os dados da entrega e confirme tudo com seguranca antes de seguir para o pagamento.',
+    stageTitle: 'Escolha 2 sabores',
+    stageCopy: 'Voce pode montar seu pedido com calma. Todos os sabores do cardapio ficam disponiveis aqui para transmitir confianca na escolha e deixar claro exatamente o que vai entrar no pedido.',
+    kitLabel: '2 ovos de 400g',
+    priceLabel: 'R$ 54,90',
+    sidebarFormat: 'Kit com 2 ovos',
+    summaryTitle: 'Kit Promocional Pague 1 Leve 2',
+    category: 'Ovos de Colher',
+    value: 54.90,
+    checkoutValueLabel: 'R$ 54,90',
+    pickerStatusReady: 'Kit pronto com',
+    flavorCatalog: uniqueFlavorCatalog
+  },
+  kids: {
+    label: 'Linha Infantil',
+    title: 'Monte seu pedido <em>infantil</em>',
+    sub: 'O mesmo checkout guiado, agora para a promocao infantil. Escolha os sabores das criancas, preencha os dados e siga para o pagamento no final da terceira etapa.',
+    stageTitle: 'Escolha 2 sabores infantis',
+    stageCopy: 'Essa etapa mostra apenas os sabores da promocao infantil. Assim a familia escolhe com clareza o que vai nos ovos e segue com mais confianca para finalizar o pedido.',
+    kitLabel: '2 ovos infantis',
+    priceLabel: 'R$ 60,00',
+    sidebarFormat: 'Promocao infantil',
+    summaryTitle: 'Promocao Ovos Infantis 2 por 60',
+    category: 'Ovos Infantis',
+    value: 60.00,
+    checkoutValueLabel: 'R$ 60,00',
+    pickerStatusReady: 'Pedido infantil pronto com',
+    flavorCatalog: kidsFlavorCatalog
+  }
+};
 const purchaseState = {
   step: 1,
+  offerType: 'classic',
   selectedFlavors: [],
   customer: {}
 };
+
+function getCurrentOfferConfig(){
+  return offerConfigs[purchaseState.offerType] || offerConfigs.classic;
+}
+
+function syncPurchaseOfferContent(){
+  const config = getCurrentOfferConfig();
+  if(purchaseModalKicker) purchaseModalKicker.textContent = config.label;
+  if(purchaseModalTitle) purchaseModalTitle.innerHTML = config.title;
+  if(purchaseModalSub) purchaseModalSub.textContent = config.sub;
+  if(purchaseStageTitle) purchaseStageTitle.textContent = config.stageTitle;
+  if(purchaseStageCopy) purchaseStageCopy.textContent = config.stageCopy;
+  if(purchaseKitLabel) purchaseKitLabel.textContent = config.kitLabel;
+  if(purchasePriceLabel) purchasePriceLabel.textContent = config.priceLabel;
+  if(purchaseSidebarPrice) purchaseSidebarPrice.textContent = config.priceLabel;
+  if(purchaseSidebarFormat) purchaseSidebarFormat.textContent = config.sidebarFormat;
+  if(checkoutTotalValue) checkoutTotalValue.textContent = config.checkoutValueLabel;
+}
 
 function syncModalBodyState(){
   const anyOpen = [flavorsModal, purchaseModal].some(modal => modal && modal.classList.contains('is-open'));
@@ -1988,7 +2074,8 @@ if(closeFlavorsModal && flavorsModal){
 
 function renderFlavorPicker(){
   if(!purchaseFlavorPicker) return;
-  purchaseFlavorPicker.innerHTML = uniqueFlavorCatalog.map((flavor, index) => `
+  const config = getCurrentOfferConfig();
+  purchaseFlavorPicker.innerHTML = config.flavorCatalog.map((flavor, index) => `
     <button type="button" class="flavor-option${purchaseState.selectedFlavors.includes(flavor) ? ' is-selected' : ''}" data-flavor-option="${flavor}">
       <span class="flavor-option-index">Sabor ${String(index + 1).padStart(2, '0')}</span>
       <span class="flavor-option-name">${flavor}</span>
@@ -2017,15 +2104,16 @@ function renderFlavorPicker(){
 
 function updateFlavorStatus(){
   if(!purchaseFlavorStatus) return;
+  const config = getCurrentOfferConfig();
   if(purchaseState.selectedFlavors.length === 0){
     purchaseFlavorStatus.innerHTML = 'Selecione exatamente <strong>2 sabores</strong> para avançar.';
     return;
   }
   if(purchaseState.selectedFlavors.length === 1){
-    purchaseFlavorStatus.innerHTML = `Você já escolheu <strong>${purchaseState.selectedFlavors[0]}</strong>. Falta mais 1 sabor.`;
+    purchaseFlavorStatus.innerHTML = `Voce ja escolheu <strong>${purchaseState.selectedFlavors[0]}</strong>. Falta mais 1 sabor.`;
     return;
   }
-  purchaseFlavorStatus.innerHTML = `Kit pronto com <strong>${purchaseState.selectedFlavors[0]}</strong> e <strong>${purchaseState.selectedFlavors[1]}</strong>.`;
+  purchaseFlavorStatus.innerHTML = `${config.pickerStatusReady} <strong>${purchaseState.selectedFlavors[0]}</strong> e <strong>${purchaseState.selectedFlavors[1]}</strong>.`;
 }
 
 function updateSidebarFlavorCount(){
@@ -2035,6 +2123,7 @@ function updateSidebarFlavorCount(){
 }
 
 function renderPurchaseSummary(){
+  const config = getCurrentOfferConfig();
   if(summaryFlavors){
     summaryFlavors.innerHTML = purchaseState.selectedFlavors.map(flavor => `<span class="summary-flavor">${flavor}</span>`).join('');
   }
@@ -2085,15 +2174,19 @@ function setPurchaseModal(open){
   syncModalBodyState();
 }
 
-function openPurchaseModal(initialFlavor){
+function openPurchaseModal(initialFlavor, offerType = 'classic'){
+  purchaseState.offerType = offerType in offerConfigs ? offerType : 'classic';
   setFlavorsModal(false);
   setPurchaseModal(true);
   setPurchaseStep(1);
+  syncPurchaseOfferContent();
 
   if(initialFlavor){
     purchaseState.selectedFlavors = [initialFlavor];
   } else if(purchaseState.selectedFlavors.length > 2){
     purchaseState.selectedFlavors = purchaseState.selectedFlavors.slice(0, 2);
+  } else if(!initialFlavor){
+    purchaseState.selectedFlavors = [];
   }
 
   updateFlavorStatus();
@@ -2114,9 +2207,11 @@ function showPurchaseToast(){
 function buildCheckoutUrl(){
   const hasRealCheckout = CHECKOUT_URL && !CHECKOUT_URL.includes('SEU-CHECKOUT-AQUI');
   if(!hasRealCheckout) return '';
+  const config = getCurrentOfferConfig();
 
   const params = new URLSearchParams({
     pedido: `DC-${Math.floor(1000 + Math.random() * 9000)}`,
+    produto: config.summaryTitle,
     sabores: purchaseState.selectedFlavors.join(' | '),
     nome: purchaseState.customer.name || '',
     telefone: purchaseState.customer.phone || '',
@@ -2128,7 +2223,7 @@ function buildCheckoutUrl(){
     cep: purchaseState.customer.cep || '',
     complemento: purchaseState.customer.complement || '',
     observacoes: purchaseState.customer.reference || '',
-    valor: '34.90'
+    valor: String(config.value.toFixed(2))
   });
 
   const separator = CHECKOUT_URL.includes('?') ? '&' : '?';
@@ -2171,12 +2266,13 @@ function goToCheckoutScreen(){
 }
 
 function proceedToCheckout(){
+  const config = getCurrentOfferConfig();
   if(typeof fbq === 'function'){
     fbq('track', 'InitiateCheckout', {
-      content_name: 'Kit Promocional Pague 1 Leve 2',
-      content_category: 'Ovos de Colher',
+      content_name: config.summaryTitle,
+      content_category: config.category,
       currency: 'BRL',
-      value: 34.90,
+      value: config.value,
       num_items: purchaseState.selectedFlavors.length || 2
     });
   }
@@ -2194,7 +2290,10 @@ function proceedToCheckout(){
 document.querySelectorAll('[data-open-purchase]').forEach(trigger => {
   trigger.addEventListener('click', event => {
     event.preventDefault();
-    openPurchaseModal(trigger.getAttribute('data-flavor'));
+    openPurchaseModal(
+      trigger.getAttribute('data-flavor'),
+      trigger.getAttribute('data-offer-type') || 'classic'
+    );
   });
 });
 
@@ -2255,6 +2354,8 @@ if(purchaseRestartFlow){
   purchaseRestartFlow.addEventListener('click', () => {
     purchaseState.selectedFlavors = [];
     purchaseForm?.reset();
+    purchaseState.offerType = 'classic';
+    syncPurchaseOfferContent();
     updateFlavorStatus();
     renderFlavorPicker();
     updateSidebarFlavorCount();
@@ -2268,6 +2369,7 @@ if(purchaseCloseAfterCheckout){
   });
 }
 
+syncPurchaseOfferContent();
 updateFlavorStatus();
 renderFlavorPicker();
 updateSidebarFlavorCount();
