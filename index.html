@@ -427,6 +427,89 @@ h1 span.line2{display:block;font-size:.7em;font-weight:700;color:var(--cream);op
 }
 .product-cta:hover{background:var(--gold);color:var(--black);}
 
+.kids-offer{
+  margin:34px 0 10px;
+  padding:34px;
+  border-radius:30px;
+  border:1px solid rgba(201,147,58,.18);
+  background:
+    radial-gradient(circle at top left, rgba(255,183,77,.18), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(255,227,170,.12), transparent 28%),
+    linear-gradient(135deg, rgba(74,33,18,.96), rgba(43,18,10,.98));
+  box-shadow:0 26px 70px rgba(0,0,0,.28);
+}
+.kids-offer-wrap{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:26px;
+  align-items:stretch;
+}
+.kids-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 14px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);
+  font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cream);margin-bottom:16px;
+}
+.kids-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  line-height:1;margin-bottom:12px;
+}
+.kids-title em{color:#ffd27a;font-style:italic;}
+.kids-copy{
+  color:rgba(245,230,200,.78);
+  max-width:640px;font-size:1rem;line-height:1.8;
+}
+.kids-flavors{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;margin-top:22px;
+}
+.kids-flavor{
+  padding:14px 16px;border-radius:18px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,248,235,.06);
+  color:var(--cream);font-size:.92rem;line-height:1.5;
+}
+.kids-card{
+  padding:26px;border-radius:26px;
+  border:1px solid rgba(255,255,255,.1);
+  background:linear-gradient(180deg, rgba(255,245,225,.12), rgba(255,255,255,.04));
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.kids-price-label{
+  font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(245,230,200,.68);margin-bottom:10px;
+}
+.kids-price-main{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,5vw,4rem);
+  line-height:.95;color:#fff4df;
+}
+.kids-price-main span{
+  display:block;font-size:1.1rem;letter-spacing:.18em;
+  text-transform:uppercase;color:#ffd27a;margin-top:10px;
+}
+.kids-price-sub{margin-top:16px;color:rgba(245,230,200,.78);line-height:1.7;}
+.kids-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+.kids-badge{
+  padding:10px 14px;border-radius:999px;
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--cream);font-size:.72rem;letter-spacing:.06em;
+}
+.kids-cta{
+  margin-top:20px;display:inline-flex;align-items:center;justify-content:center;
+  padding:15px 24px;border-radius:999px;
+  background:linear-gradient(135deg, #ffd27a, #c9933a);
+  color:#2c130a;font-weight:700;letter-spacing:.06em;text-decoration:none;
+  transition:transform .24s ease, box-shadow .24s ease;
+  box-shadow:0 18px 40px rgba(201,147,58,.24);
+}
+.kids-cta:hover{transform:translateY(-2px);}
+
 body.modal-open{overflow:hidden;}
 .flavors-modal{
   position:fixed;inset:0;z-index:400;
@@ -1047,6 +1130,9 @@ footer{
   .section,.urgency-final{padding:70px 24px;}
   .flavors-spotlight{padding:20px;flex-direction:column;align-items:flex-start;}
   .products-grid{grid-template-columns:1fr;}
+  .kids-offer{padding:24px;}
+  .kids-offer-wrap{grid-template-columns:1fr;}
+  .kids-flavors{grid-template-columns:1fr;}
   .flavors-modal{padding:14px;}
   .flavors-modal-head{padding:24px 20px 14px;}
   .flavors-modal-count{margin:0 20px 18px;}
@@ -1358,8 +1444,49 @@ footer{
       <li><span class="flavor-index">27</span><span class="flavor-name">Chocolate Branco com Frutas Vermelhas</span></li>
       <li><span class="flavor-index">28</span><span class="flavor-name">Caramelo Salgado com Chocolate</span></li>
     </ul>
-  </div>
 </div>
+</div>
+
+<section class="section">
+  <div class="kids-offer">
+    <div class="kids-offer-wrap">
+      <div>
+        <span class="kids-kicker">Linha Infantil</span>
+        <h2 class="kids-title">Ovos de crianca com <em>promocao especial</em></h2>
+        <p class="kids-copy">
+          Para quem quer deixar a Pascoa ainda mais divertida, essa selecao infantil entra como uma oferta separada, com sabores doces e classicos para agradar os pequenos.
+        </p>
+
+        <div class="kids-flavors">
+          <div class="kids-flavor"><strong>Brigadeiro ao Leite</strong><br>Sabor doce, cremoso e queridinho das criancas.</div>
+          <div class="kids-flavor"><strong>Ninho Cremoso</strong><br>Recheio suave e delicado, com perfil mais leve.</div>
+          <div class="kids-flavor"><strong>Oreo Crocante</strong><br>Creme com pedacinhos de biscoito para deixar divertido.</div>
+          <div class="kids-flavor"><strong>Chocolate com Confete</strong><br>Opcao colorida e com visual infantil para presentear.</div>
+          <div class="kids-flavor"><strong>Chocolate Branco</strong><br>Doce classico para quem prefere um sabor mais suave.</div>
+        </div>
+      </div>
+
+      <div class="kids-card">
+        <div>
+          <div class="kids-price-label">Promocao infantil</div>
+          <div class="kids-price-main">2 por R$ 60<span>Oferta especial</span></div>
+          <div class="kids-price-sub">
+            Ideal para presentear duas criancas ou montar uma lembranca de Pascoa com melhor custo-beneficio.
+          </div>
+          <div class="kids-badges">
+            <span class="kids-badge">5 sabores infantis</span>
+            <span class="kids-badge">2 unidades por R$ 60</span>
+            <span class="kids-badge">Pedido pelo WhatsApp</span>
+          </div>
+        </div>
+
+        <a href="https://w.app/docecolherfortaleza?text=Oi%21%20Quero%20saber%20mais%20sobre%20a%20promocao%20dos%20ovos%20infantis%20de%20P%C3%A1scoa%2C%202%20por%20R%24%2060." class="kids-cta" target="_blank" rel="noopener noreferrer">
+          Quero os ovos infantis
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <div class="purchase-modal" id="purchaseModal" aria-hidden="true">
   <div class="purchase-modal-backdrop" data-close-purchase-modal></div>
